@@ -8,7 +8,8 @@ import java.util.Map;
 import Exception.ElementoNoEncontradoException;
 import Exception.ElementoDuplicadoException;
 
-public class AlmacenamientoP<K, E, M> implements IConexion <String, Producto, String> {
+
+public class AlmacenamientoP implements IConexion <String, Producto, String> {
 
     private Map<String, Producto> mapaProducto;
 
@@ -31,17 +32,36 @@ public class AlmacenamientoP<K, E, M> implements IConexion <String, Producto, St
     }
 
     @Override
-    public void eliminar(String s) throws ElementoNoEncontradoException {
+    public void eliminar(String clave) throws ElementoNoEncontradoException{
 
+        if (!mapaProducto.containsKey(clave)){
+            throw new ElementoNoEncontradoException();
+        }
+
+        mapaProducto.remove(clave);
     }
 
     @Override
-    public Producto obtener(Producto producto) {
-        return null;
+    public Producto obtener(String clave) throws ElementoNoEncontradoException{
+
+        if (!mapaProducto.containsKey(clave)){
+            throw new ElementoNoEncontradoException();
+        }
+
+         return mapaProducto.get(clave);
     }
 
     @Override
-    public Producto obtenerPorMetadato(String s) {
-        return null;
+    public Producto obtenerPorMetadato(String metadato) throws ElementoNoEncontradoException{
+
+        for (Producto p : mapaProducto.values()){
+
+            if (p.getCategoria().equals(metadato)){
+
+                return p;
+            }
+        }
+
+        throw new ElementoNoEncontradoException();
     }
 }

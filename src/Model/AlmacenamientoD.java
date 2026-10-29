@@ -2,16 +2,17 @@ package Model;
 
 import Interface.IConexion;
 
+import javax.print.Doc;
 import javax.swing.*;
 import java.util.ArrayList;
 import Exception.ElementoDuplicadoException;
 import Exception.ElementoNoEncontradoException;
 
-public class AlmacenamientoD<K, E, M> implements IConexion<String, Documento, String> {
+public class AlmacenamientoD implements IConexion<String, Documento, String> {
 
     private ArrayList<Documento> documento;
 
-    public AlmacenamientoD(ArrayList<Documento> documento) {
+    public AlmacenamientoD() {
         this.documento = new ArrayList<>();
     }
 
@@ -33,21 +34,31 @@ public class AlmacenamientoD<K, E, M> implements IConexion<String, Documento, St
 
     @Override
     public void eliminar(String clave) throws ElementoNoEncontradoException {
-       if (!documento.contains(clave)){
 
+        Documento encontrado = null;
+
+       for (Documento d : documento){
+
+           if (d.getTitulo().equals(clave)){
+               encontrado = d;
+               break;
+           }
+       }
+
+       if (encontrado == null){
            throw new ElementoNoEncontradoException();
        }
 
-       documento.remove(clave);
+       documento.remove(encontrado);
 
     }
 
     @Override
-    public Documento obtener(Documento doc) throws ElementoNoEncontradoException{
+    public Documento obtener(String doc) throws ElementoNoEncontradoException{
 
         for (Documento d : documento){
 
-            if (d.getTitulo().equals(doc.getTitulo())){
+            if (d.getTitulo().equals(doc)){
 
                 return d;
             }
@@ -58,11 +69,11 @@ public class AlmacenamientoD<K, E, M> implements IConexion<String, Documento, St
     }
 
     @Override
-    public Documento obtenerPorMetadato(String clave) throws ElementoNoEncontradoException{
+    public Documento obtenerPorMetadato(String metedato) throws ElementoNoEncontradoException{
 
         for (Documento d : documento){
 
-            if (d.getTitulo().equals(clave)){
+            if (d.getAutor().equals(metedato)){
 
                 return d;
             }

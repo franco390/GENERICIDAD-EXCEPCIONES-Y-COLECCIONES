@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.Objects;
+
 public class Usuario {
 
     private String nombreUsuario;
@@ -34,5 +36,25 @@ public class Usuario {
 
     public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Usuario usuario)) return false;
+        return Objects.equals(email, usuario.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(email);
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "contrasenia='" + contrasenia + '\'' +
+                ", nombreUsuario='" + nombreUsuario + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 }

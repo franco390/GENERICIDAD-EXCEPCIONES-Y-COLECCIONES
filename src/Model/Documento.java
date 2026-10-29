@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.Objects;
+
 public class Documento {
 
     private String titulo;
@@ -34,5 +36,25 @@ public class Documento {
 
     public void setAutor(String autor) {
         this.autor = autor;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Documento documento)) return false;
+        return Objects.equals(titulo, documento.titulo);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(titulo);
+    }
+
+    @Override
+    public String toString() {
+        return "Documento{" +
+                "autor='" + autor + '\'' +
+                ", titulo='" + titulo + '\'' +
+                ", contenido='" + contenido + '\'' +
+                '}';
     }
 }
